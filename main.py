@@ -54,8 +54,6 @@ stopwords.append("watch")
 print ("We use " + str(len(stopwords)) + " stop-words from nltk library.")
 print (stopwords[:10])
 
-"""Use our defined functions to analyze (i.e. tokenize, stem) our reviews."""
-
 from nltk.stem.snowball import SnowballStemmer
 # from nltk.stem import WordNetLemmatizer 
 
