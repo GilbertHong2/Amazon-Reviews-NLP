@@ -1,11 +1,3 @@
-## Contents
-
-* [Part 1: Load Data](#Part-1:-Load-Data)
-* [Part 2: Tokenizing and Stemming](#Part-2:-Tokenizing-and-Stemming)
-* [Part 3: TF-IDF](#Part-3:-TF-IDF)
-* [Part 4: K-means clustering](#Part-4:-K-means-clustering)
-* [Part 5: Topic Modeling - Latent Dirichlet Allocation](#Part-5:-Topic-Modeling---Latent-Dirichlet-Allocation)
-
 # load data
     
 !pip install -U -q PyDrive
