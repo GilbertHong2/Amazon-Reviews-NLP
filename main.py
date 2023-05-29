@@ -18,7 +18,6 @@ file.GetContentFile('data.tsv')
 import numpy as np
 import pandas as pd
 import nltk
-# import gensim
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
@@ -28,7 +27,6 @@ nltk.download('stopwords')
 
 # Load data into dataframe
 df = pd.read_csv('data.tsv', sep='\t', error_bad_lines=False)
-
 df.head()
 
 # Remove missing value
@@ -43,12 +41,8 @@ data = df.loc[:999, 'review_body'].tolist()
 
 data
 
-"""# Part 2: Tokenizing and Stemming
-
-Load stopwords and stemmer function from NLTK library.
-Stop words are words like "a", "the", or "in" which don't convey significant meaning.
-Stemming is the process of breaking a word down into its root.
-"""
+# Tokenizing and Stemming
+# Load stopwords and stemmer function from NLTK library.
 
 # Use nltk's English stopwords.
 stopwords = nltk.corpus.stopwords.words('english') #stopwords.append("n't")
