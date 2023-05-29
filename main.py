@@ -41,7 +41,7 @@ data = df.loc[:999, 'review_body'].tolist()
 
 data
 
-# Tokenizing and Stemming
+## Tokenizing and Stemming
 # Load stopwords and stemmer function from NLTK library.
 
 # Use nltk's English stopwords.
@@ -84,7 +84,7 @@ def tokenization_and_stemming(text):
 tokenization_and_stemming(data[0])
 data[0]
 
-# TF-IDF
+## TF-IDF
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 # simple with large range of df and only 1-gram
@@ -104,8 +104,7 @@ print ("In total, there are " + str(tfidf_matrix.shape[0]) + \
 # print(type(tfidf_matrix.toarray()))
 # print(type(tfidf_matrix.todense()))
 
-# Save the terms identified by TF-IDF.
-
+## Save the terms identified by TF-IDF.
 # words
 tf_selected_words = tfidf_model.get_feature_names()
 
