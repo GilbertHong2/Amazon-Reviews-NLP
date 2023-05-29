@@ -106,25 +106,17 @@ print ("In total, there are " + str(tfidf_matrix.shape[0]) + \
 
 ## Save the terms identified by TF-IDF.
 # words
-tf_selected_words = tfidf_model.get_feature_names()
-
-# print out words
+tf_selected_words = tfidf_model.get_feature_names_out()
 tf_selected_words
 
-"""# Part 4: K-means clustering"""
-
-# k-means clustering
+## K-means clustering
 from sklearn.cluster import KMeans
-
 num_clusters = 5
 
-# number of clusters
 km = KMeans(n_clusters=num_clusters)
 km.fit(tfidf_matrix)
 
 clusters = km.labels_.tolist()
-
-"""## 4.1. Analyze K-means Result"""
 
 # create DataFrame films from all of the input files.
 product = { 'review': df[:1000].review_body, 'cluster': clusters}
@@ -137,17 +129,13 @@ frame['cluster'].value_counts().to_frame()
 
 km.cluster_centers_
 
-# 239数的list -> cluster 0的中心点的tf-idf值
-#-> assumption: 中心点的值可以代表这个cluster
-#-> tf-idf值越大，对应的词越能代表这个document
-#-> 选出了tf-idf最大的6个值对应的词来代表这个cluster
-
+# choose highest 6 tf-idf values to represent the cluster
+# km.cluster_centers_ denotes the importances of each items in centroid.
 km.cluster_centers_.shape
 
-print ("<Document clustering result by K-means>")
+print ("Document K-means Clustering Result:")
 
-#km.cluster_centers_ denotes the importances of each items in centroid.
-#We need to sort it in decreasing-order and get the top k items.
+# sort it in descending order to get the top k items.
 order_centroids = km.cluster_centers_.argsort()[:, ::-1] 
 
 Cluster_keywords_summary = {}
@@ -164,8 +152,7 @@ for i in range(num_clusters):
     print (", ".join(cluster_reviews))
     print ()
 
-"""# Part 5: Topic Modeling - Latent Dirichlet Allocation"""
-
+## Topic Modeling - Latent Dirichlet Allocation
 # Use LDA for clustering
 from sklearn.decomposition import LatentDirichletAllocation
 lda = LatentDirichletAllocation(n_components=5)
@@ -185,7 +172,6 @@ topic_names = ["Topic" + str(i) for i in range(lda.n_components)]
 
 # index names
 doc_names = ["Doc" + str(i) for i in range(len(data))]
-
 df_document_topic = pd.DataFrame(np.round(lda_output, 2), columns=topic_names, index=doc_names)
 
 # get dominant topic for each document
@@ -202,14 +188,14 @@ print(lda.components_)
 df_topic_words = pd.DataFrame(lda.components_)
 
 # column and index
-df_topic_words.columns = tfidf_model.get_feature_names()
+df_topic_words.columns = tfidf_model.get_feature_names_out()
 df_topic_words.index = topic_names
 
 df_topic_words.head()
 
 # print top n keywords for each topic
 def print_topic_words(tfidf_model, lda_model, n_words):
-    words = np.array(tfidf_model.get_feature_names())
+    words = np.array(tfidf_model.get_feature_names_out())
     topic_words = []
     # for each topic, we have words weight
     for topic_words_weights in lda_model.components_:
@@ -223,3 +209,6 @@ df_topic_words = pd.DataFrame(topic_keywords)
 df_topic_words.columns = ['Word '+str(i) for i in range(df_topic_words.shape[1])]
 df_topic_words.index = ['Topic '+str(i) for i in range(df_topic_words.shape[0])]
 df_topic_words
+
+
+
