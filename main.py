@@ -55,9 +55,11 @@ print ("We use " + str(len(stopwords)) + " stop-words from nltk library.")
 print (stopwords[:10])
 
 from nltk.stem.snowball import SnowballStemmer
+# alternative more accurate option:
 # from nltk.stem import WordNetLemmatizer 
 
 stemmer = SnowballStemmer("english")
+# stemmer = WordNetLemmatizer("English")
 
 # tokenization and stemming
 def tokenization_and_stemming(text):
@@ -78,27 +80,14 @@ def tokenization_and_stemming(text):
     stems = [stemmer.stem(t) for t in filtered_tokens]
     return stems
 
+# verify
 tokenization_and_stemming(data[0])
-
 data[0]
 
-"""# Part 3: TF-IDF
-
-TF: Term Frequency
-
-IDF: Inverse Document Frequency
-"""
+# TF-IDF
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-# define vectorizer parameters
-# TfidfVectorizer will help us to create tf-idf matrix
-# max_df : maximum document frequency for the given word
-# min_df : minimum document frequency for the given word
-# max_features: maximum number of words
-# use_idf: if not true, we only calculate tf
-# stop_words : built-in stop words
-# tokenizer: how to tokenize the document
-# ngram_range: (min_value, max_value), eg. (1, 3) means the result will include 1-gram, 2-gram, 3-gram
+# simple with large range of df and only 1-gram
 tfidf_model = TfidfVectorizer(max_df=0.99, max_features=1000,
                                  min_df=0.01, stop_words='english',
                                  use_idf=True, tokenizer=tokenization_and_stemming, ngram_range=(1,1))
@@ -108,17 +97,14 @@ tfidf_matrix = tfidf_model.fit_transform(data) #fit the vectorizer to synopses
 print ("In total, there are " + str(tfidf_matrix.shape[0]) + \
       " reviews and " + str(tfidf_matrix.shape[1]) + " terms.")
 
-tfidf_matrix
+# tfidf_matrix
+# tfidf_matrix.toarray()
+# tfidf_matrix.todense()
 
-tfidf_matrix.toarray() #todense()
+# print(type(tfidf_matrix.toarray()))
+# print(type(tfidf_matrix.todense()))
 
-tfidf_matrix.todense()
-
-print(type(tfidf_matrix.toarray()))
-
-print(type(tfidf_matrix.todense()))
-
-"""Save the terms identified by TF-IDF."""
+# Save the terms identified by TF-IDF.
 
 # words
 tf_selected_words = tfidf_model.get_feature_names()
