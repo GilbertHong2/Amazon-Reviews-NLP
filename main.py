@@ -211,4 +211,3 @@ df_topic_words.index = ['Topic '+str(i) for i in range(df_topic_words.shape[0])]
 df_topic_words
 
 
-
